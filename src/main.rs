@@ -7,8 +7,7 @@ pub fn main() -> Result<(), git2::Error> {
     let mut stdout = io::stdout();
 
     loop {
-        // todo --help 구현
-        print!("명령어 입력 (init, add <path>, commit <msg>, log, push <remote> <refspec>, q): ");
+        print!("git playground(도움말 help): ");
         stdout.flush().unwrap();
         let mut input = String::new();
         stdin.lock().read_line(&mut input).unwrap();
@@ -20,6 +19,16 @@ pub fn main() -> Result<(), git2::Error> {
         }
 
         match tokens[0] {
+            "help" => {
+                println!("명령어");
+                println!("init: .git 생성");
+                println!("add <path>: 변경 사항을 스테이지에 올림");
+                println!("commit <msg>: 변경 사항을 기록");
+                println!("push <remote> <refspec>: 기록된 사항을 remote에 전송");
+                println!("revert <commit_id>: commit된 기록을 롤백");
+                println!("log: 로그 출력");
+                println!("q: 종료")
+            }
             "init" => {
                 if let Err(e) = commands::git_init() {
                     println!("init error: {}", e);
